@@ -63,6 +63,25 @@ button {
   color: var(--colour-ink);
 }
 
+.music-hint {
+  position: fixed;
+  top: var(--space-sm);
+  left: var(--page-gutter);
+  z-index: 40;
+  margin: 0;
+  color: var(--colour-white);
+  font-family: var(--font-meta);
+  font-size: 0.68rem;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  pointer-events: none;
+  text-shadow: 0 1px 8px rgba(20, 12, 6, 0.35);
+}
+
+.music-hint[hidden] {
+  display: none;
+}
+
 .glitter-rain {
   position: fixed;
   inset: 0;

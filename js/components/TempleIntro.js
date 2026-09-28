@@ -69,7 +69,6 @@ export function TempleIntro() {
   const skip = document.querySelector("[data-skip-intro]");
 
   function apply(progress) {
-    progress = engageNameHold(progress);
     const temple = templeScene.compute(progress);
     const door = doorTransition.compute(progress);
     const hallway = hallwayReveal.compute(progress);
@@ -105,8 +104,6 @@ export function TempleIntro() {
       skip.classList.toggle("skip-intro--on-cream", exitVeil > 0.45);
     }
 
-    if (nameLocked) return;
-
     if (progress < scrollTimeline.nameFadeOut[1] - 0.02) {
       jumped = false;
     } else if (!jumped && progress >= scrollTimeline.nameFadeOut[1]) {
@@ -117,102 +114,9 @@ export function TempleIntro() {
   let frame = 0;
   let attached = false;
   let jumped = false;
-  let nameLocked = false;
-  let scrollsWhileLocked = 0;
-  let lastGestureAt = 0;
-  let lockY = 0;
-  const gestureGap = 700;
-
-  function holdScrollTop() {
-    const scrollable = Math.max(root.offsetHeight - window.innerHeight, 1);
-    return scrollTimeline.holdName[0] * scrollable;
-  }
-
-  function engageNameHold(progress) {
-    if (prefersReduced || jumped || nameLocked) return progress;
-    if (progress < scrollTimeline.holdName[0]) return progress;
-    nameLocked = true;
-    scrollsWhileLocked = 0;
-    lastGestureAt = performance.now();
-    lockY = holdScrollTop();
-    if (window.scrollY > lockY + 1) window.scrollTo(0, lockY);
-    return scrollTimeline.holdName[0];
-  }
-
-  function registerHoldGesture() {
-    if (!nameLocked) return;
-    const now = performance.now();
-    if (now - lastGestureAt < gestureGap) return;
-    lastGestureAt = now;
-    scrollsWhileLocked += 1;
-    if (scrollsWhileLocked >= 3) jumpToInvite();
-  }
-
-  function releaseNameHold() {
-    nameLocked = false;
-    scrollsWhileLocked = 0;
-  }
-
-  function onWheel(event) {
-    if (!nameLocked) return;
-    if (event.deltaY < 0) {
-      releaseNameHold();
-      return;
-    }
-    if (event.deltaY > 0) {
-      event.preventDefault();
-      registerHoldGesture();
-    }
-  }
-
-  function onTouchMove(event) {
-    if (!nameLocked) return;
-    const touch = event.touches[0];
-    if (!touch || touchStartY == null) return;
-    const delta = touchStartY - touch.clientY;
-    if (delta < -16) {
-      releaseNameHold();
-      return;
-    }
-    if (delta > 16) {
-      event.preventDefault();
-      registerHoldGesture();
-    }
-  }
-
-  let touchStartY = null;
-
-  function onTouchStart(event) {
-    touchStartY = event.touches[0]?.clientY ?? null;
-  }
-
-  function onKeyDown(event) {
-    if (!nameLocked) return;
-    const down = event.key === "ArrowDown" || event.key === "PageDown" || event.key === " ";
-    const up = event.key === "ArrowUp" || event.key === "PageUp";
-    if (up) {
-      releaseNameHold();
-      return;
-    }
-    if (!down || event.repeat) return;
-    event.preventDefault();
-    registerHoldGesture();
-  }
-
-  function onScroll() {
-    if (nameLocked && window.scrollY < lockY - 48) {
-      releaseNameHold();
-    } else if (nameLocked && window.scrollY > lockY + 2) {
-      registerHoldGesture();
-      if (nameLocked) window.scrollTo(0, lockY);
-      return;
-    }
-    schedule();
-  }
 
   function jumpToInvite() {
     if (jumped) return;
-    releaseNameHold();
     jumped = true;
     const invite = document.querySelector(".invitation");
     if (!invite) return;
@@ -239,28 +143,19 @@ export function TempleIntro() {
       return;
     }
     apply(0);
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    window.addEventListener("keydown", onKeyDown);
   }
 
   function detach() {
     attached = false;
-    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("scroll", schedule);
     window.removeEventListener("resize", schedule);
-    window.removeEventListener("wheel", onWheel);
-    window.removeEventListener("touchstart", onTouchStart);
-    window.removeEventListener("touchmove", onTouchMove);
-    window.removeEventListener("keydown", onKeyDown);
     if (frame) window.cancelAnimationFrame(frame);
     frame = 0;
   }
 
   function skipToEnd() {
-    releaseNameHold();
     jumpToInvite();
     apply(1);
   }
