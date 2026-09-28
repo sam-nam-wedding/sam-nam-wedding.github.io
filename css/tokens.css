@@ -1,0 +1,80 @@
+:root {
+  /* Colour */
+  --colour-cream: #f4efe6;
+  --colour-cream-deep: #ebe4d6;
+  --colour-ink: #1c1712;
+  --colour-ink-soft: #4a4036;
+  --colour-stone: #8a7b6b;
+  --colour-gold-mute: #a8906c;
+  --colour-gold-line: #c4a574;
+  --colour-name: #eadcc4;
+  --colour-veil: #0b0907;
+  --colour-white: #fbf8f2;
+
+  /* Typography */
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Great Vibes", cursive;
+  --font-meta: "Jost", "Helvetica Neue", sans-serif;
+  --size-name: clamp(2.6rem, 7.2vw, 6.4rem);
+  --size-subtitle: clamp(1.2rem, 2.4vw, 1.85rem);
+  --size-section: clamp(2.4rem, 5vw, 4.2rem);
+  --size-body: clamp(1.05rem, 1.5vw, 1.25rem);
+  --tracking-name: 0.38em;
+  --tracking-meta: 0.22em;
+  --leading-body: 1.7;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 8rem;
+  --space-xxl: 12rem;
+  --content-max: 72rem;
+  --page-gutter: clamp(1.25rem, 5vw, 4.5rem);
+
+  /* Animation timing (used as scroll segment ranges, not clocks) */
+  --intro-scroll-height: 820vh;
+  --ease-cinematic: cubic-bezier(0.45, 0.05, 0.2, 1);
+
+  /* Focal points — tune when swapping images (percent of the viewport crop) */
+  --door-origin-x: 50%;
+  --door-origin-y: 78%;
+  --temple-origin-x: 50%;
+  --temple-origin-y: 6%;
+  --hallway-origin-x: 50%;
+  --hallway-origin-y: 46%;
+
+  /* Layer defaults */
+  --gopura-top: 32vh;
+  --gopura-height: 220vh;
+  --temple-scale: 1;
+  --temple-opacity: 1;
+  --sky-opacity: 1;
+  --sky-scale: 1.04;
+  --sky-shift: 0vh;
+  --door-scale: 1;
+  --door-opacity: 0;
+  --hallway-scale: 1.02;
+  --hallway-opacity: 0;
+  --name-opacity: 0;
+  --rule-opacity: 0;
+  --subtitle-opacity: 0;
+  --exit-veil: 0;
+  --hint-opacity: 1;
+  --stage-cream: 0;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --door-origin-y: 72%;
+    --hallway-origin-y: 50%;
+  }
+}
+
+@media (min-width: 1400px) {
+  :root {
+    --door-origin-y: 76%;
+  }
+}

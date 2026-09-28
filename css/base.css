@@ -1,0 +1,79 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  overflow-x: hidden;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--colour-cream);
+  color: var(--colour-ink);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+  min-height: 100%;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
+
+.skip-intro {
+  position: fixed;
+  top: var(--space-sm);
+  right: var(--page-gutter);
+  z-index: 40;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--colour-white);
+  font-family: var(--font-meta);
+  font-size: 0.68rem;
+  letter-spacing: var(--tracking-meta);
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.72;
+}
+
+.skip-intro[hidden] {
+  display: none;
+}
+
+.skip-intro:hover,
+.skip-intro:focus-visible {
+  opacity: 1;
+}
+
+.skip-intro--on-cream {
+  color: var(--colour-ink);
+}
+
+.glitter-rain {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-intro {
+    color: var(--colour-ink);
+  }
+}

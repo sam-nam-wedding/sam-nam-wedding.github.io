@@ -1,0 +1,83 @@
+/**
+ * Wedding timeline copy. Replace descriptions here without touching layout.
+ * Do not add venues, places, or times that were not given.
+ */
+export const celebrationsCopy = {
+  eyebrow: "The invitation",
+  title: "The celebrations begin",
+};
+
+export const timelineEvents = [
+  {
+    id: "sangeeth",
+    title: "Sangeeth",
+    description: "An evening of music, laughter and celebration.",
+    date: "29 November",
+    time: "Evening",
+    venue: "Coming soon",
+    image: "./images/events/sangeeth.webp?v=3",
+    alt: "Young men and women dancing under night lights",
+    layout: "dominant",
+    side: "image-left",
+  },
+  {
+    id: "chapra",
+    title: "Chapra",
+    description: "Sunshine, laughter and blessings.",
+    date: "30 November",
+    time: "Morning",
+    venue: "Coming soon",
+    image: "./images/events/chapra-haldi.webp?v=3",
+    alt: "Friends celebrating the Chapra ceremony",
+    layout: "intimate",
+    side: "image-right",
+  },
+  {
+    id: "engagement",
+    title: "Engagement",
+    description: "Two hearts, one beautiful beginning.",
+    date: "02 December",
+    time: "Morning",
+    venue: "Coming soon",
+    image: "./images/events/engagement.webp?v=3",
+    alt: "The groom in a suit placing a ring on the bride",
+    layout: "split",
+    side: "image-right",
+  },
+  {
+    id: "reception",
+    title: "Reception",
+    description: "An evening to celebrate together.",
+    date: "02 December",
+    time: "6:00 PM onwards",
+    venue: "Coming soon",
+    image: "./images/events/reception.webp",
+    alt: "An evening reception hall in warm gold light",
+    layout: "panorama",
+    side: "image-left",
+  },
+  {
+    id: "muhurtha",
+    title: "Muhurtha",
+    description: "The moment everything becomes one.",
+    date: "03 December",
+    time: "Details to follow",
+    venue: "Coming soon",
+    image: "./images/events/muhurtha.webp",
+    alt: "A jasmine mandapam in early morning light",
+    layout: "feature",
+    side: "image-left",
+  },
+  {
+    id: "beegarooota",
+    title: "Beegaroota",
+    description: "And finally, we gather around the same table.",
+    date: "06 December",
+    time: "Details to follow",
+    venue: "Coming soon",
+    image: "./images/events/beegarooota.webp?v=3",
+    alt: "Young guests laughing over a banana-leaf meal",
+    layout: "closing",
+    side: "image-right",
+  },
+];
