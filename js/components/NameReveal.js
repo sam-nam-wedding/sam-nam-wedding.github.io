@@ -1,19 +1,19 @@
-import { scrollTimeline } from "../config/scrollTimeline.js?v=inv11";
-import { easeOutCubic, segmentProgress } from "../utils/interpolate.js";
+import { scrollTimeline } from "../config/scrollTimeline.js?v=inv49";
+import { easeInOutCubic, segmentProgress } from "../utils/interpolate.js";
 
 export function NameReveal() {
   return {
     compute(progress) {
-      const titleIn = easeOutCubic(
+      const titleIn = easeInOutCubic(
         segmentProgress(progress, ...scrollTimeline.nameReveal)
       );
-      const ruleIn = easeOutCubic(
+      const ruleIn = easeInOutCubic(
         segmentProgress(progress, ...scrollTimeline.ruleReveal)
       );
-      const subtitleIn = easeOutCubic(
+      const subtitleIn = easeInOutCubic(
         segmentProgress(progress, ...scrollTimeline.subtitleReveal)
       );
-      const exitT = easeOutCubic(
+      const exitT = easeInOutCubic(
         segmentProgress(progress, ...scrollTimeline.nameFadeOut)
       );
 

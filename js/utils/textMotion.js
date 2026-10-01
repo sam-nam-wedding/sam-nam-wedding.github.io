@@ -1,3 +1,6 @@
+import { scrollTimeline } from "../config/scrollTimeline.js?v=inv49";
+import { easeInOutCubic } from "./interpolate.js";
+
 const EASE = "power2.out";
 const DURATION = 0.32;
 
@@ -226,57 +229,38 @@ export function StrokeDraw(svg, options = {}) {
 
 export function InviteReveal(root) {
   if (!root) return;
-  const api = motion();
+  const stage = root.querySelector(".invite-stage");
+  const card = root.querySelector(".invite-card");
   const ganesha = root.querySelector(".invite-ganesha img");
   const names = [...root.querySelectorAll(".invite__person, .invite__join")];
-  const others = [
-    ...root.querySelectorAll("[data-line]:not(.invite__person), [data-motion='fade-up']"),
-  ];
+  const lines = [...root.querySelectorAll(".invite-card [data-line]")];
   const ornaments = [...root.querySelectorAll(".invite-ornament")];
-  if (reduced() || !api) {
-    show([ganesha, ...names, ...others].filter(Boolean));
-    ornaments.forEach((el) => {
-      el.style.transform = "scaleX(1)";
-    });
-    return;
-  }
-  const { gsap } = api;
-  const tl = gsap.timeline({
-    scrollTrigger: trigger(root, "top 88%"),
-  });
-  if (ganesha) {
-    tl.fromTo(
-      ganesha,
-      { opacity: 0, y: 10, scale: 0.97 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: EASE },
-      0
-    );
-  }
-  names.forEach((el, i) => {
-    tl.fromTo(
-      el,
-      { opacity: 0, y: 16, scale: 1.04 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "power2.out" },
-      0.18 + i * 0.12
-    );
-  });
-  const afterNames = Math.max(0.18 + names.length * 0.12 + 0.55, 0.9);
-  others.forEach((el, i) => {
-    tl.fromTo(
-      el,
-      { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, duration: 0.42, ease: EASE },
-      i === 0 ? afterNames : ">"
-    );
-  });
+  show([ganesha, ...names, ...lines].filter(Boolean));
   ornaments.forEach((el) => {
-    tl.fromTo(
-      el,
-      { scaleX: 0 },
-      { scaleX: 1, duration: 0.45, ease: EASE, transformOrigin: "center center" },
-      ">"
-    );
+    el.style.transform = "scaleX(1)";
   });
+  if (!stage || !card) return;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const place = () => {
+    if (reduced) {
+      card.style.opacity = "1";
+      card.style.pointerEvents = "auto";
+      return;
+    }
+    const intro = document.querySelector(".temple-intro");
+    const vh = window.innerHeight || 1;
+    const scrollable = Math.max((intro?.offsetHeight || vh) - vh, 1);
+    const appearAt = scrollTimeline.blurToDark[1] * scrollable;
+    const remain = Math.max(scrollable - appearAt, vh * 0.45);
+    const travel = Math.min(1, Math.max(0, (window.scrollY - appearAt) / remain));
+    const eased = easeInOutCubic(travel);
+    card.style.opacity = eased.toFixed(3);
+    card.style.pointerEvents = eased > 0.92 ? "auto" : "none";
+  };
+  place();
+  window.addEventListener("scroll", place, { passive: true });
+  window.addEventListener("resize", place);
 }
 
 export function attachScrollReveals(root) {

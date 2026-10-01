@@ -78,11 +78,13 @@ export const weddingEvents = [
     side: "image-left",
     date: "06 DECEMBER 2026",
     weekday: "Sunday",
-    title: "BEEGAR OOTA",
-    time: "10:00 AM onwards",
-    venue: "Details to follow",
+    title: "BEEGARA OOTA",
+    time: "11:00 AM onwards",
+    venue: "MANASA – Banquet & Lawns",
     venueLines: [],
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=MANASA%20Banquet%20%26%20Lawns%20Bettahalli%20Kadabagere%20Magadi%20Main%20Road%20Bengaluru%20562130",
     image: "./images/events/beegaroota.webp?v=4",
-    alt: "A banana-leaf meal for Beegar Oota",
+    alt: "A banana-leaf meal for Beegara Oota",
   },
 ];

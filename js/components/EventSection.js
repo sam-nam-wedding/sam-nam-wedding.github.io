@@ -3,7 +3,7 @@ import {
   celebrationsAddress,
   celebrationsMapsUrl,
   weddingEvents,
-} from "../config/invitation.js?v=inv26";
+} from "../config/invitation.js?v=inv36";
 import { attachScrollReveals } from "../utils/textMotion.js?v=inv24";
 
 const pinSvg = `

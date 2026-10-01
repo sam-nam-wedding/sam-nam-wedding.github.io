@@ -3,20 +3,21 @@
  * Ranges overlap so pans, zooms, and crossfades stay continuous.
  */
 export const scrollTimeline = {
-  skyLine: [0.12, 0.288],
-  skyToGopura: [0.048, 0.408],
-  gopuraToDoor: [0.36, 0.648],
-  doorFadeIn: [0.504, 0.66],
-  hallwayAppear: [0.576, 0.696],
-  doorToHallway: [0.648, 0.792],
-  hallwayZoom: [0.696, 0.91],
-  nameReveal: [0.86, 0.905],
-  ruleReveal: [0.875, 0.915],
-  subtitleReveal: [0.89, 0.925],
-  holdName: [0.925, 0.938],
-  nameFadeOut: [0.938, 0.955],
-  hallwayFadeOut: [0.942, 0.97],
-  exitIntro: [0.948, 0.99],
+  skyLine: [0.024, 0.142],
+  skyToGopura: [0.024, 0.083],
+  gopuraToDoor: [0.059, 0.145],
+  doorFadeIn: [0.344, 0.438],
+  hallwayAppear: [0.403, 0.498],
+  doorToHallway: [0.462, 0.581],
+  hallwayZoom: [0.51, 0.699],
+  nameReveal: [0.638, 0.758],
+  ruleReveal: [0.677, 0.774],
+  subtitleReveal: [0.713, 0.792],
+  holdName: [0.758, 0.86],
+  nameFadeOut: [0.99, 1],
+  blurToDark: [0.86, 0.93],
+  hallwayFadeOut: [1.01, 1.02],
+  exitIntro: [1, 1],
 };
 
 export const motion = {

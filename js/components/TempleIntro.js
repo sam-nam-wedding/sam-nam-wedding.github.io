@@ -1,11 +1,11 @@
 import { nameRevealCopy, templeAssets } from "../config/templeAssets.js?v=inv25";
-import { scrollTimeline } from "../config/scrollTimeline.js?v=inv11";
+import { scrollTimeline } from "../config/scrollTimeline.js?v=inv49";
 import { getSectionProgress } from "../utils/scrollProgress.js";
-import { clamp, easeOutCubic, segmentProgress } from "../utils/interpolate.js";
-import { TempleScene } from "./TempleScene.js?v=inv3";
-import { DoorTransition } from "./DoorTransition.js?v=inv3";
-import { HallwayReveal } from "./HallwayReveal.js?v=inv3";
-import { NameReveal } from "./NameReveal.js?v=inv10";
+import { clamp, easeInOutCubic, easeOutCubic, segmentProgress } from "../utils/interpolate.js";
+import { TempleScene } from "./TempleScene.js?v=inv49";
+import { DoorTransition } from "./DoorTransition.js?v=inv49";
+import { HallwayReveal } from "./HallwayReveal.js?v=inv49";
+import { NameReveal } from "./NameReveal.js?v=inv49";
 
 export function TempleIntro() {
   const templeScene = TempleScene();
@@ -60,6 +60,7 @@ export function TempleIntro() {
           <span class="scroll-hint__line"></span>
         </div>
       </div>
+      <div class="temple-intro__night" aria-hidden="true"></div>
     </div>
   `;
 
@@ -73,14 +74,11 @@ export function TempleIntro() {
     const door = doorTransition.compute(progress);
     const hallway = hallwayReveal.compute(progress);
     const name = nameReveal.compute(progress);
-    const exitVeil = easeOutCubic(segmentProgress(progress, ...scrollTimeline.exitIntro));
+    const darkT = easeInOutCubic(segmentProgress(progress, ...scrollTimeline.blurToDark));
+    const exitVeil = 0;
     const skyOpacity = 1 - easeOutCubic(segmentProgress(progress, ...scrollTimeline.skyLine));
     const hint = 1 - clamp(progress / 0.06, 0, 1);
-    const stageCream = segmentProgress(
-      progress,
-      scrollTimeline.nameFadeOut[0],
-      scrollTimeline.exitIntro[1]
-    );
+    const stageCream = 0;
 
     root.style.setProperty("--gopura-top", `${temple.top}vh`);
     root.style.setProperty("--temple-scale", String(temple.scale));
@@ -98,17 +96,14 @@ export function TempleIntro() {
     root.style.setProperty("--exit-veil", String(exitVeil));
     root.style.setProperty("--hint-opacity", String(hint));
     root.style.setProperty("--stage-cream", String(stageCream));
+    root.style.setProperty("--scene-dark", darkT.toFixed(3));
+    root.style.setProperty("--scene-blur", `${(darkT * 18).toFixed(2)}px`);
 
     if (skip) {
-      skip.hidden = progress >= scrollTimeline.nameFadeOut[0];
+      skip.hidden = progress >= scrollTimeline.blurToDark[0];
       skip.classList.toggle("skip-intro--on-cream", exitVeil > 0.45);
     }
 
-    if (progress < scrollTimeline.nameFadeOut[1] - 0.02) {
-      jumped = false;
-    } else if (!jumped && progress >= scrollTimeline.nameFadeOut[1]) {
-      jumpToInvite();
-    }
   }
 
   let frame = 0;
@@ -118,10 +113,11 @@ export function TempleIntro() {
   function jumpToInvite() {
     if (jumped) return;
     jumped = true;
-    const invite = document.querySelector(".invitation");
-    if (!invite) return;
+    const intro = document.querySelector(".temple-intro");
+    const vh = window.innerHeight || 1;
+    const scrollable = Math.max((intro?.offsetHeight || 0) - vh, 1);
     window.scrollTo({
-      top: invite.getBoundingClientRect().top + window.scrollY,
+      top: scrollTimeline.blurToDark[1] * scrollable + vh * 0.9,
       behavior: "auto",
     });
     window.ScrollTrigger?.refresh();

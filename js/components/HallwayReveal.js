@@ -1,4 +1,4 @@
-import { motion, scrollTimeline } from "../config/scrollTimeline.js?v=inv11";
+import { motion, scrollTimeline } from "../config/scrollTimeline.js?v=inv49";
 import {
   easeInOutCubic,
   easeOutCubic,
