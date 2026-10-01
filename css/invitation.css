@@ -60,6 +60,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  gap: 0;
   padding: 4vh var(--page-gutter);
   box-sizing: border-box;
   opacity: 0;
@@ -94,11 +95,49 @@
 .invite-card .invite__opening,
 .invite-card .invite__couple,
 .invite-card .invite__body {
-  width: min(40rem, 92vw);
+  width: min(52rem, 94vw);
+  gap: 0.7rem;
+}
+
+.invite-card .invite__opening {
+  position: absolute;
+  top: clamp(2.2rem, 5.5vh, 4rem);
+  left: 50%;
+  width: min(52rem, 94vw);
+  transform: translateX(-50%);
+}
+
+.invite-card .invite__couple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(52rem, 94vw);
+  margin: 0;
+  transform: translate(-50%, -50%);
 }
 
 .invite-card .invite__body {
-  margin-top: 1.15rem;
+  position: absolute;
+  top: calc(50% + 7.6rem);
+  left: 50%;
+  width: min(52rem, 94vw);
+  margin: 0;
+  padding-top: clamp(1.7rem, 4.21vh, 2.43rem);
+  transform: translateX(-50%);
+  gap: 0.45rem;
+}
+
+.invite-card .invite-ganesha,
+.invite-card .invite-ornament {
+  margin: 0 auto;
+}
+
+.invite-card .invite__line {
+  margin-top: 0;
+}
+
+.invite-card .invite__join {
+  margin: 0.15rem 0;
 }
 
 .invite-ganesha {
@@ -176,7 +215,7 @@
   display: inline-block;
   margin: 0 auto;
   font-family: var(--font-display);
-  font-size: clamp(2.15rem, 5.6vw, 3.6rem);
+  font-size: clamp(2.75rem, 7.4vw, 4.5rem);
   font-weight: 600;
   letter-spacing: 0.04em;
   line-height: 1.12;
@@ -185,7 +224,38 @@
 }
 
 .invite__person-text {
-  color: #2a160c;
+  color: #7a4e32;
+}
+
+.invite-card.is-settled .invite__person,
+.invite-card.is-settled .invite__join {
+  animation: invite-name-in 1.05s ease forwards;
+}
+
+.invite-card.is-settled .invite__join {
+  animation-delay: 0.16s;
+}
+
+.invite-card.is-settled .invite__person:last-of-type {
+  animation-delay: 0.32s;
+}
+
+@keyframes invite-name-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.45rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invite-card.is-settled .invite__person,
+  .invite-card.is-settled .invite__join {
+    animation: none;
+  }
 }
 
 .invite__join {

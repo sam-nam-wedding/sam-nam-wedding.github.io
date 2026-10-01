@@ -257,6 +257,7 @@ export function InviteReveal(root) {
     const eased = easeInOutCubic(travel);
     card.style.opacity = eased.toFixed(3);
     card.style.pointerEvents = eased > 0.92 ? "auto" : "none";
+    if (eased > 0.9) card.classList.add("is-settled");
   };
   place();
   window.addEventListener("scroll", place, { passive: true });

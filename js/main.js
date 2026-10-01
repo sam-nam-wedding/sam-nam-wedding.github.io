@@ -1,7 +1,7 @@
 import { TempleIntro } from "./components/TempleIntro.js?v=inv49";
 import { attachInvitationAudio } from "./components/AudioToggle.js?v=inv34";
 import { attachGlitterRain } from "./components/GlitterRain.js?v=inv33";
-import { FormalInvitation, attachInvitation } from "./components/FormalInvitation.js?v=inv49";
+import { FormalInvitation, attachInvitation } from "./components/FormalInvitation.js?v=inv54";
 import { EventSection, attachEvents } from "./components/EventSection.js?v=inv36";
 import { Countdown, attachCountdown } from "./components/Countdown.js?v=inv24";
 import { ClosingNote } from "./components/ClosingNote.js?v=inv25";
