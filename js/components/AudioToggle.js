@@ -1,7 +1,5 @@
 import { invitationAudio } from "../config/audio.js?v=inv34";
 
-const gestureEvents = ["pointerdown", "touchend", "wheel"];
-
 export function attachInvitationAudio() {
   const audio = new Audio(invitationAudio);
   audio.loop = true;
@@ -11,33 +9,29 @@ export function attachInvitationAudio() {
   audio.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;display:block";
   document.body.appendChild(audio);
 
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "play-invite";
+  button.setAttribute("aria-label", "Play");
+  button.innerHTML = `
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M24 18.5v27l22-13.5z"></path>
+    </svg>
+    <span>Play</span>
+  `;
+  document.body.appendChild(button);
+
   let started = false;
   let ending = false;
-  let attempt = false;
 
-  function removeGestures() {
-    for (const name of gestureEvents) {
-      window.removeEventListener(name, onGesture, true);
-    }
-  }
-
-  function onGesture(event) {
-    if (started || ending) return;
-    const finger = event.type === "pointerdown" || event.type === "touchend";
-    if (attempt && !finger) return;
-    attempt = true;
-    audio.play().then(() => {
-      started = true;
-      removeGestures();
-    }).catch(() => {
-      attempt = false;
-    });
+  function hideButton() {
+    button.hidden = true;
   }
 
   function fadeOut() {
     if (ending) return;
     ending = true;
-    removeGestures();
+    hideButton();
     audio.loop = false;
     const from = audio.volume;
     const start = performance.now();
@@ -60,12 +54,17 @@ export function attachInvitationAudio() {
     if (closing.getBoundingClientRect().top < window.innerHeight * 0.8) fadeOut();
   }
 
+  button.addEventListener("click", () => {
+    if (ending) return;
+    audio.play().then(() => {
+      started = true;
+      hideButton();
+    }).catch(() => {});
+  });
+
   audio.play().then(() => {
     started = true;
-    removeGestures();
+    hideButton();
   }).catch(() => {});
   window.addEventListener("scroll", onScroll, { passive: true });
-  for (const name of gestureEvents) {
-    window.addEventListener(name, onGesture, { capture: true, passive: true });
-  }
 }

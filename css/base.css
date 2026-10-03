@@ -63,6 +63,54 @@ button {
   color: var(--colour-ink);
 }
 
+.play-invite {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 45;
+  transform: translate(-50%, -50%);
+  width: clamp(8.5rem, 46vw, 12.5rem);
+  height: clamp(8.5rem, 46vw, 12.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(246, 239, 226, 0.72);
+  background: rgba(12, 9, 7, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(196, 165, 116, 0.35);
+  backdrop-filter: blur(5px);
+  color: #f6efe2;
+  cursor: pointer;
+}
+
+.play-invite[hidden] {
+  display: none;
+}
+
+.play-invite svg {
+  width: 22%;
+  height: 22%;
+  margin-left: 4%;
+  fill: currentColor;
+}
+
+.play-invite span {
+  font-family: var(--font-meta);
+  font-size: 0.68rem;
+  font-weight: 300;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.play-invite:hover,
+.play-invite:focus-visible {
+  background: rgba(12, 9, 7, 0.28);
+  border-color: rgba(246, 239, 226, 0.92);
+}
+
 .glitter-rain {
   position: fixed;
   inset: 0;

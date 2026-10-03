@@ -3,13 +3,13 @@
  * One viewport is 0.2 of progress. The invitation page follows SAM-NAM.
  */
 export const scrollTimeline = {
-  skyLine: [0.026, 0.22],
-  skyToGopura: [0.026, 0.123],
-  gopuraToDoor: [0.083, 0.225],
-  doorFadeIn: [0.225, 0.32],
-  hallwayAppear: [0.435, 0.55],
-  doorToHallway: [0.435, 0.55],
-  hallwayZoom: [0.461, 0.64],
+  skyLine: [0.004, 0.07],
+  skyToGopura: [0.004, 0.06],
+  gopuraToDoor: [0.03, 0.13],
+  doorFadeIn: [0.05, 0.15],
+  hallwayAppear: [0.22, 0.42],
+  doorToHallway: [0.22, 0.42],
+  hallwayZoom: [0.32, 0.64],
   nameReveal: [0.64, 0.755],
   ruleReveal: [0.678, 0.794],
   subtitleReveal: [0.717, 0.832],
