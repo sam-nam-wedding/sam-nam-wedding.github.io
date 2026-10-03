@@ -1,7 +1,7 @@
 /**
  * Scroll progress is 0–1 across the sticky intro (640vh of scroll, 740vh tall).
- * One viewport is ~0.156 of progress. Every beat is one scroll, except SAM-NAM,
- * which eases in and then holds for about two scrolls before the blur.
+ * One viewport is ~0.156 of progress. SAM-NAM stays for one scroll, then the
+ * next scroll blurs into the invitation.
  */
 export const scrollTimeline = {
   skyLine: [0.02, 0.172],
@@ -14,9 +14,9 @@ export const scrollTimeline = {
   nameReveal: [0.5, 0.59],
   ruleReveal: [0.53, 0.62],
   subtitleReveal: [0.56, 0.65],
-  holdName: [0.59, 0.843],
+  holdName: [0.59, 0.66],
   nameFadeOut: [0.99, 1],
-  blurToDark: [0.843, 0.93],
+  blurToDark: [0.66, 0.78],
   hallwayFadeOut: [1.01, 1.02],
   exitIntro: [1, 1],
 };

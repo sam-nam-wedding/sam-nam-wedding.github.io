@@ -1,6 +1,6 @@
 import { invitationAudio } from "../config/audio.js?v=inv34";
 
-const gestureEvents = ["touchstart", "touchend", "pointerdown", "wheel"];
+const gestureEvents = ["pointerdown", "pointerup", "touchend", "wheel"];
 
 export function attachInvitationAudio() {
   const audio = new Audio(invitationAudio);
@@ -18,16 +18,16 @@ export function attachInvitationAudio() {
     }
   }
 
-  function begin(event) {
-    if (started || ending) return;
-    const fromFinger = event && (event.type === "touchstart" || event.type === "touchend" || event.type === "pointerdown");
-    if (pending && !fromFinger) return;
+  function markStarted() {
+    started = true;
+    pending = false;
+    removeGestures();
+  }
+
+  function begin() {
+    if (started || ending || pending) return;
     pending = true;
-    audio.play().then(() => {
-      started = true;
-      pending = false;
-      removeGestures();
-    }).catch(() => {
+    audio.play().then(markStarted).catch(() => {
       pending = false;
     });
   }
@@ -51,7 +51,8 @@ export function attachInvitationAudio() {
     window.requestAnimationFrame(step);
   }
 
-  function onScroll() {
+  function onScroll(event) {
+    if (!started && navigator.userActivation?.isActive) begin(event);
     if (ending) return;
     const closing = document.querySelector("#closing");
     if (!closing) return;

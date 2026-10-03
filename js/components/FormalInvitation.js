@@ -1,5 +1,5 @@
 import { invitationCopy } from "../config/invitation.js?v=inv14";
-import { InviteReveal } from "../utils/textMotion.js?v=inv61";
+import { InviteReveal } from "../utils/textMotion.js?v=inv69";
 
 export function FormalInvitation() {
   const section = document.createElement("section");
