@@ -45,23 +45,22 @@
 }
 
 .invite-stage {
-  height: 440vh;
-  margin-top: -360vh;
+  height: auto;
+  margin-top: -100vh;
 }
 
 .invite-card {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
+  position: relative;
+  height: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
   gap: 0;
-  padding: 4vh var(--page-gutter);
+  padding: clamp(2.4rem, 6vh, 4rem) var(--page-gutter) 0;
   box-sizing: border-box;
   opacity: 0;
   pointer-events: none;
@@ -71,14 +70,11 @@
     url("../images/temple-hallway.jpg");
   background-size: cover;
   background-position: 50% 48%;
+  background-attachment: fixed;
 }
 
 .invite-card::after {
-  content: "";
-  position: absolute;
-  inset: 1.1rem;
-  pointer-events: none;
-  border: 1px solid rgba(139, 104, 70, 0.22);
+  content: none;
 }
 
 .invite__opening,
@@ -99,31 +95,23 @@
   gap: 0.7rem;
 }
 
-.invite-card .invite__opening {
-  position: absolute;
-  top: clamp(1.15rem, 3.45vh, 2.35rem);
-  left: 50%;
-  width: min(52rem, 94vw);
-  transform: translateX(-50%);
+.invite-card .invite__opening,
+.invite-card .invite__couple,
+.invite-card .invite__body {
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
 }
 
 .invite-card .invite__couple {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(52rem, 94vw);
-  margin: 0;
-  transform: translate(-50%, -50%);
+  margin-top: clamp(1.6rem, 3.8vh, 2.4rem);
 }
 
 .invite-card .invite__body {
-  position: absolute;
-  top: calc(50% + 7.6rem);
-  left: 50%;
-  width: min(52rem, 94vw);
-  margin: 0;
-  padding-top: clamp(1.7rem, 4.21vh, 2.43rem);
-  transform: translateX(-50%);
+  margin-top: clamp(1.7rem, 4.21vh, 2.43rem);
+  margin-bottom: clamp(7.5rem, 19vh, 11rem);
+  padding-top: 0;
   gap: 0.45rem;
 }
 

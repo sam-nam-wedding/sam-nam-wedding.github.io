@@ -1,11 +1,11 @@
 import { nameRevealCopy, templeAssets } from "../config/templeAssets.js?v=inv25";
-import { scrollTimeline } from "../config/scrollTimeline.js?v=inv69";
+import { scrollTimeline } from "../config/scrollTimeline.js?v=inv76";
 import { getSectionProgress } from "../utils/scrollProgress.js";
 import { clamp, easeInOutCubic, easeOutCubic, segmentProgress } from "../utils/interpolate.js";
-import { TempleScene } from "./TempleScene.js?v=inv69";
-import { DoorTransition } from "./DoorTransition.js?v=inv69";
-import { HallwayReveal } from "./HallwayReveal.js?v=inv69";
-import { NameReveal } from "./NameReveal.js?v=inv69";
+import { TempleScene } from "./TempleScene.js?v=inv76";
+import { DoorTransition } from "./DoorTransition.js?v=inv76";
+import { HallwayReveal } from "./HallwayReveal.js?v=inv76";
+import { NameReveal } from "./NameReveal.js?v=inv76";
 
 export function TempleIntro() {
   const templeScene = TempleScene();
@@ -74,7 +74,8 @@ export function TempleIntro() {
     const door = doorTransition.compute(progress);
     const hallway = hallwayReveal.compute(progress);
     const name = nameReveal.compute(progress);
-    const darkT = easeInOutCubic(segmentProgress(progress, ...scrollTimeline.blurToDark)) * 0.28;
+    const nameExit = easeInOutCubic(segmentProgress(progress, ...scrollTimeline.nameFadeOut));
+    const darkT = 0;
     const exitVeil = 0;
     const skyOpacity = 1 - easeOutCubic(segmentProgress(progress, ...scrollTimeline.skyLine));
     const hint = 1 - clamp(progress / 0.06, 0, 1);
@@ -97,10 +98,10 @@ export function TempleIntro() {
     root.style.setProperty("--hint-opacity", String(hint));
     root.style.setProperty("--stage-cream", String(stageCream));
     root.style.setProperty("--scene-dark", darkT.toFixed(3));
-    root.style.setProperty("--scene-blur", `${(darkT * 22).toFixed(2)}px`);
+    root.style.setProperty("--scene-blur", `${(nameExit * 8).toFixed(2)}px`);
 
     if (skip) {
-      skip.hidden = progress >= scrollTimeline.blurToDark[0];
+      skip.hidden = progress >= scrollTimeline.nameFadeOut[0];
       skip.classList.toggle("skip-intro--on-cream", exitVeil > 0.45);
     }
 
@@ -117,7 +118,7 @@ export function TempleIntro() {
     const vh = window.innerHeight || 1;
     const scrollable = Math.max((intro?.offsetHeight || 0) - vh, 1);
     window.scrollTo({
-      top: scrollTimeline.blurToDark[1] * scrollable + vh * 0.9,
+      top: scrollable + 12,
       behavior: "auto",
     });
     window.ScrollTrigger?.refresh();

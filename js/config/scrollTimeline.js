@@ -1,22 +1,21 @@
 /**
- * Scroll progress is 0–1 across the sticky intro (640vh of scroll, 740vh tall).
- * One viewport is ~0.156 of progress. SAM-NAM stays for one scroll, then the
- * next scroll blurs into the invitation.
+ * Scroll progress is 0–1 across the sticky intro (500vh of scroll, 600vh tall).
+ * One viewport is 0.2 of progress. The invitation page follows SAM-NAM.
  */
 export const scrollTimeline = {
-  skyLine: [0.02, 0.172],
-  skyToGopura: [0.02, 0.096],
-  gopuraToDoor: [0.065, 0.176],
-  doorFadeIn: [0.176, 0.25],
-  hallwayAppear: [0.34, 0.43],
-  doorToHallway: [0.34, 0.43],
-  hallwayZoom: [0.36, 0.5],
-  nameReveal: [0.5, 0.59],
-  ruleReveal: [0.53, 0.62],
-  subtitleReveal: [0.56, 0.65],
-  holdName: [0.59, 0.66],
-  nameFadeOut: [0.99, 1],
-  blurToDark: [0.66, 0.78],
+  skyLine: [0.026, 0.22],
+  skyToGopura: [0.026, 0.123],
+  gopuraToDoor: [0.083, 0.225],
+  doorFadeIn: [0.225, 0.32],
+  hallwayAppear: [0.435, 0.55],
+  doorToHallway: [0.435, 0.55],
+  hallwayZoom: [0.461, 0.64],
+  nameReveal: [0.64, 0.755],
+  ruleReveal: [0.678, 0.794],
+  subtitleReveal: [0.717, 0.832],
+  holdName: [0.755, 0.8],
+  nameFadeOut: [0.8, 0.89],
+  blurToDark: [1.01, 1.02],
   hallwayFadeOut: [1.01, 1.02],
   exitIntro: [1, 1],
 };

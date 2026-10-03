@@ -1,5 +1,4 @@
-import { scrollTimeline } from "../config/scrollTimeline.js?v=inv69";
-import { easeInOutCubic, easeOutCubic } from "./interpolate.js";
+import { easeOutCubic } from "./interpolate.js";
 
 const EASE = "power2.out";
 const DURATION = 0.32;
@@ -229,7 +228,6 @@ export function StrokeDraw(svg, options = {}) {
 
 export function InviteReveal(root) {
   if (!root) return;
-  const stage = root.querySelector(".invite-stage");
   const card = root.querySelector(".invite-card");
   const ganesha = root.querySelector(".invite-ganesha img");
   const names = [...root.querySelectorAll(".invite__person, .invite__join")];
@@ -239,28 +237,33 @@ export function InviteReveal(root) {
   ornaments.forEach((el) => {
     el.style.transform = "scaleX(1)";
   });
-  if (!stage || !card) return;
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
+  if (!card) return;
+  const settle = () => card.classList.add("is-settled");
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    card.style.opacity = "1";
+    card.style.pointerEvents = "auto";
+    settle();
+    return;
+  }
   const place = () => {
-    if (reduced) {
-      card.style.opacity = "1";
-      card.style.pointerEvents = "auto";
-      return;
-    }
     const intro = document.querySelector(".temple-intro");
     const vh = window.innerHeight || 1;
     const scrollable = Math.max((intro?.offsetHeight || vh) - vh, 1);
-    const blurStartPx = scrollTimeline.blurToDark[0] * scrollable;
-    const blurEndPx = scrollTimeline.blurToDark[1] * scrollable;
-    const appearAt = blurStartPx;
-    const fadeEnd = blurStartPx + (blurEndPx - blurStartPx) * 0.62;
-    const remain = Math.max(fadeEnd - appearAt, vh * 0.2);
-    const travel = Math.min(1, Math.max(0, (window.scrollY - appearAt) / remain));
-    const eased = easeOutCubic(travel);
+    const fadeDist = Math.round(vh * 0.5);
+    const start = scrollable - fadeDist;
+    const y = window.scrollY;
+    if (y < start) {
+      card.style.opacity = "0";
+      card.style.transform = "none";
+      card.style.pointerEvents = "none";
+      return;
+    }
+    const t = Math.min(1, (y - start) / fadeDist);
+    const eased = easeOutCubic(t);
+    card.style.transform = t >= 1 ? "none" : `translateY(${Math.round(-(1 - t) * fadeDist)}px)`;
     card.style.opacity = eased.toFixed(3);
     card.style.pointerEvents = eased > 0.92 ? "auto" : "none";
-    if (eased > 0.9) card.classList.add("is-settled");
+    if (eased > 0.85) settle();
   };
   place();
   window.addEventListener("scroll", place, { passive: true });

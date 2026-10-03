@@ -8,7 +8,7 @@ export function attachInvitationAudio() {
   audio.preload = "auto";
   audio.playsInline = true;
   audio.volume = 0.33;
-  audio.hidden = true;
+  audio.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;display:block";
   document.body.appendChild(audio);
 
   let started = false;
@@ -21,8 +21,10 @@ export function attachInvitationAudio() {
     }
   }
 
-  function onGesture() {
-    if (started || ending || attempt) return;
+  function onGesture(event) {
+    if (started || ending) return;
+    const finger = event.type === "pointerdown" || event.type === "touchend";
+    if (attempt && !finger) return;
     attempt = true;
     audio.play().then(() => {
       started = true;

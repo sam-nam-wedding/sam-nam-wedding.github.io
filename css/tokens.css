@@ -35,7 +35,7 @@
   --page-gutter: clamp(1.25rem, 5vw, 4.5rem);
 
   /* Animation timing (used as scroll segment ranges, not clocks) */
-  --intro-scroll-height: 740vh;
+  --intro-scroll-height: 600vh;
   --ease-cinematic: cubic-bezier(0.45, 0.05, 0.2, 1);
 
   /* Focal points — tune when swapping images (percent of the viewport crop) */
