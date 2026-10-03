@@ -1,44 +1,66 @@
 import { invitationAudio } from "../config/audio.js?v=inv34";
 
-const startEvents = ["pointerdown", "keydown", "touchstart", "wheel"];
+const gestureEvents = ["touchstart", "touchend", "pointerdown", "wheel"];
 
 export function attachInvitationAudio() {
   const audio = new Audio(invitationAudio);
   audio.loop = true;
   audio.preload = "auto";
-  audio.volume = 0.55;
+  audio.volume = 0.33;
 
-  const hint = document.querySelector("[data-music-hint]");
   let started = false;
+  let ending = false;
+  let pending = false;
 
-  function hideHint() {
-    if (hint) hint.hidden = true;
-  }
-
-  function clearStartListeners() {
-    for (const eventName of startEvents) {
-      window.removeEventListener(eventName, startOnGesture);
+  function removeGestures() {
+    for (const name of gestureEvents) {
+      window.removeEventListener(name, begin, true);
     }
   }
 
-  async function startOnGesture() {
-    if (started) return;
-    try {
-      await audio.play();
+  function begin(event) {
+    if (started || ending) return;
+    const fromFinger = event && (event.type === "touchstart" || event.type === "touchend" || event.type === "pointerdown");
+    if (pending && !fromFinger) return;
+    pending = true;
+    audio.play().then(() => {
       started = true;
-      hideHint();
-      clearStartListeners();
-    } catch {
-      started = false;
-    }
+      pending = false;
+      removeGestures();
+    }).catch(() => {
+      pending = false;
+    });
   }
 
-  audio.play().then(() => {
-    started = true;
-    hideHint();
-  }).catch(() => {
-    for (const eventName of startEvents) {
-      window.addEventListener(eventName, startOnGesture, { passive: true });
-    }
-  });
+  function fadeOut() {
+    if (ending) return;
+    ending = true;
+    removeGestures();
+    audio.loop = false;
+    const from = audio.volume;
+    const start = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / 1400);
+      audio.volume = from * (1 - t);
+      if (t < 1) {
+        window.requestAnimationFrame(step);
+        return;
+      }
+      audio.pause();
+    };
+    window.requestAnimationFrame(step);
+  }
+
+  function onScroll() {
+    if (ending) return;
+    const closing = document.querySelector("#closing");
+    if (!closing) return;
+    if (closing.getBoundingClientRect().top < window.innerHeight * 0.8) fadeOut();
+  }
+
+  begin();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  for (const name of gestureEvents) {
+    window.addEventListener(name, begin, { capture: true, passive: true });
+  }
 }

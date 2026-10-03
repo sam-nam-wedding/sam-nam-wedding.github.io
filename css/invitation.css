@@ -45,8 +45,8 @@
 }
 
 .invite-stage {
-  height: 420vh;
-  margin-top: -250vh;
+  height: 220vh;
+  margin-top: -180vh;
 }
 
 .invite-card {
@@ -101,7 +101,7 @@
 
 .invite-card .invite__opening {
   position: absolute;
-  top: clamp(2.2rem, 5.5vh, 4rem);
+  top: clamp(1.15rem, 3.45vh, 2.35rem);
   left: 50%;
   width: min(52rem, 94vw);
   transform: translateX(-50%);

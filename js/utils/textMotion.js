@@ -1,4 +1,4 @@
-import { scrollTimeline } from "../config/scrollTimeline.js?v=inv49";
+import { scrollTimeline } from "../config/scrollTimeline.js?v=inv61";
 import { easeInOutCubic } from "./interpolate.js";
 
 const EASE = "power2.out";
@@ -251,8 +251,10 @@ export function InviteReveal(root) {
     const intro = document.querySelector(".temple-intro");
     const vh = window.innerHeight || 1;
     const scrollable = Math.max((intro?.offsetHeight || vh) - vh, 1);
-    const appearAt = scrollTimeline.blurToDark[1] * scrollable;
-    const remain = Math.max(scrollable - appearAt, vh * 0.45);
+    const blurStart = scrollTimeline.blurToDark[0];
+    const blurSpan = scrollTimeline.blurToDark[1] - blurStart;
+    const appearAt = (blurStart + blurSpan * 0.35) * scrollable;
+    const remain = Math.max(scrollable - appearAt, vh * 0.35);
     const travel = Math.min(1, Math.max(0, (window.scrollY - appearAt) / remain));
     const eased = easeInOutCubic(travel);
     card.style.opacity = eased.toFixed(3);
