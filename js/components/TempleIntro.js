@@ -1,11 +1,11 @@
 import { nameRevealCopy, templeAssets } from "../config/templeAssets.js?v=inv25";
-import { scrollTimeline } from "../config/scrollTimeline.js?v=inv82";
+import { scrollTimeline } from "../config/scrollTimeline.js?v=inv85";
 import { getSectionProgress } from "../utils/scrollProgress.js";
 import { clamp, easeInOutCubic, easeOutCubic, segmentProgress } from "../utils/interpolate.js";
-import { TempleScene } from "./TempleScene.js?v=inv82";
-import { DoorTransition } from "./DoorTransition.js?v=inv82";
-import { HallwayReveal } from "./HallwayReveal.js?v=inv82";
-import { NameReveal } from "./NameReveal.js?v=inv82";
+import { TempleScene } from "./TempleScene.js?v=inv85";
+import { DoorTransition } from "./DoorTransition.js?v=inv85";
+import { HallwayReveal } from "./HallwayReveal.js?v=inv85";
+import { NameReveal } from "./NameReveal.js?v=inv85";
 
 export function TempleIntro() {
   const templeScene = TempleScene();

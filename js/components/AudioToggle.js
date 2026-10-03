@@ -29,20 +29,25 @@ export function attachInvitationAudio() {
   }
 
   function fadeOut() {
-    if (ending) return;
+    if (ending || audio.paused) return;
     ending = true;
     hideButton();
     audio.loop = false;
-    const from = audio.volume;
+    audio.preservesPitch = true;
+    const fromVolume = audio.volume;
+    const fromRate = audio.playbackRate || 1;
     const start = performance.now();
     const step = (now) => {
-      const t = Math.min(1, (now - start) / 1400);
-      audio.volume = from * (1 - t);
+      const t = Math.min(1, (now - start) / 3600);
+      const eased = t * t * (3 - 2 * t);
+      audio.playbackRate = fromRate + (0.4 - fromRate) * eased;
+      audio.volume = fromVolume * (1 - eased);
       if (t < 1) {
         window.requestAnimationFrame(step);
         return;
       }
       audio.pause();
+      audio.playbackRate = 1;
     };
     window.requestAnimationFrame(step);
   }
@@ -51,7 +56,9 @@ export function attachInvitationAudio() {
     if (ending) return;
     const closing = document.querySelector("#closing");
     if (!closing) return;
-    if (closing.getBoundingClientRect().top < window.innerHeight * 0.8) fadeOut();
+    const names = closing.querySelector(".closing__names") || closing;
+    const top = names.getBoundingClientRect().top;
+    if (top < window.innerHeight * 0.9) fadeOut();
   }
 
   button.addEventListener("click", () => {

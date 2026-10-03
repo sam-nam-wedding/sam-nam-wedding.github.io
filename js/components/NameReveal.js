@@ -1,4 +1,4 @@
-import { scrollTimeline } from "../config/scrollTimeline.js?v=inv82";
+import { scrollTimeline } from "../config/scrollTimeline.js?v=inv85";
 import { easeInOutCubic, segmentProgress } from "../utils/interpolate.js";
 
 export function NameReveal() {

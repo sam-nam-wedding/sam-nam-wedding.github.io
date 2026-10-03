@@ -1,5 +1,5 @@
-import { TempleIntro } from "./components/TempleIntro.js?v=inv82";
-import { attachInvitationAudio } from "./components/AudioToggle.js?v=inv83";
+import { TempleIntro } from "./components/TempleIntro.js?v=inv85";
+import { attachInvitationAudio } from "./components/AudioToggle.js?v=inv86";
 import { attachGlitterRain } from "./components/GlitterRain.js?v=inv33";
 import { FormalInvitation, attachInvitation } from "./components/FormalInvitation.js?v=inv80";
 import { EventSection, attachEvents } from "./components/EventSection.js?v=inv36";
