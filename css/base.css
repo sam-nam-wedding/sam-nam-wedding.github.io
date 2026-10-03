@@ -69,19 +69,20 @@ button {
   left: 50%;
   z-index: 45;
   transform: translate(-50%, -50%);
-  width: clamp(8.5rem, 46vw, 12.5rem);
-  height: clamp(8.5rem, 46vw, 12.5rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
+  margin: 0;
   padding: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(246, 239, 226, 0.72);
-  background: rgba(12, 9, 7, 0.16);
-  box-shadow: inset 0 0 0 1px rgba(196, 165, 116, 0.35);
-  backdrop-filter: blur(5px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
   color: #f6efe2;
   cursor: pointer;
 }
@@ -91,9 +92,9 @@ button {
 }
 
 .play-invite svg {
-  width: 22%;
-  height: 22%;
-  margin-left: 4%;
+  width: clamp(3.2rem, 18vw, 4.5rem);
+  height: clamp(3.2rem, 18vw, 4.5rem);
+  margin-left: 0.35rem;
   fill: currentColor;
 }
 
@@ -107,8 +108,8 @@ button {
 
 .play-invite:hover,
 .play-invite:focus-visible {
-  background: rgba(12, 9, 7, 0.28);
-  border-color: rgba(246, 239, 226, 0.92);
+  background: transparent;
+  opacity: 0.82;
 }
 
 .glitter-rain {
