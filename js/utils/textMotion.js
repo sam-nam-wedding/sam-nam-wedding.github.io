@@ -1,5 +1,5 @@
 import { scrollTimeline } from "../config/scrollTimeline.js?v=inv69";
-import { easeInOutCubic } from "./interpolate.js";
+import { easeInOutCubic, easeOutCubic } from "./interpolate.js";
 
 const EASE = "power2.out";
 const DURATION = 0.32;
@@ -252,11 +252,12 @@ export function InviteReveal(root) {
     const vh = window.innerHeight || 1;
     const scrollable = Math.max((intro?.offsetHeight || vh) - vh, 1);
     const blurStartPx = scrollTimeline.blurToDark[0] * scrollable;
-    const appearAt = blurStartPx + vh * 0.12;
-    const fadeEnd = Math.min(scrollable, blurStartPx + vh * 0.92);
-    const remain = Math.max(fadeEnd - appearAt, vh * 0.35);
+    const blurEndPx = scrollTimeline.blurToDark[1] * scrollable;
+    const appearAt = blurStartPx;
+    const fadeEnd = blurStartPx + (blurEndPx - blurStartPx) * 0.62;
+    const remain = Math.max(fadeEnd - appearAt, vh * 0.2);
     const travel = Math.min(1, Math.max(0, (window.scrollY - appearAt) / remain));
-    const eased = easeInOutCubic(travel);
+    const eased = easeOutCubic(travel);
     card.style.opacity = eased.toFixed(3);
     card.style.pointerEvents = eased > 0.92 ? "auto" : "none";
     if (eased > 0.9) card.classList.add("is-settled");

@@ -1,34 +1,34 @@
 import { invitationAudio } from "../config/audio.js?v=inv34";
 
-const gestureEvents = ["pointerdown", "pointerup", "touchend", "wheel"];
+const gestureEvents = ["pointerdown", "touchend", "wheel"];
 
 export function attachInvitationAudio() {
   const audio = new Audio(invitationAudio);
   audio.loop = true;
   audio.preload = "auto";
+  audio.playsInline = true;
   audio.volume = 0.33;
+  audio.hidden = true;
+  document.body.appendChild(audio);
 
   let started = false;
   let ending = false;
-  let pending = false;
+  let attempt = false;
 
   function removeGestures() {
     for (const name of gestureEvents) {
-      window.removeEventListener(name, begin, true);
+      window.removeEventListener(name, onGesture, true);
     }
   }
 
-  function markStarted() {
-    started = true;
-    pending = false;
-    removeGestures();
-  }
-
-  function begin() {
-    if (started || ending || pending) return;
-    pending = true;
-    audio.play().then(markStarted).catch(() => {
-      pending = false;
+  function onGesture() {
+    if (started || ending || attempt) return;
+    attempt = true;
+    audio.play().then(() => {
+      started = true;
+      removeGestures();
+    }).catch(() => {
+      attempt = false;
     });
   }
 
@@ -51,17 +51,19 @@ export function attachInvitationAudio() {
     window.requestAnimationFrame(step);
   }
 
-  function onScroll(event) {
-    if (!started && navigator.userActivation?.isActive) begin(event);
+  function onScroll() {
     if (ending) return;
     const closing = document.querySelector("#closing");
     if (!closing) return;
     if (closing.getBoundingClientRect().top < window.innerHeight * 0.8) fadeOut();
   }
 
-  begin();
+  audio.play().then(() => {
+    started = true;
+    removeGestures();
+  }).catch(() => {});
   window.addEventListener("scroll", onScroll, { passive: true });
   for (const name of gestureEvents) {
-    window.addEventListener(name, begin, { capture: true, passive: true });
+    window.addEventListener(name, onGesture, { capture: true, passive: true });
   }
 }

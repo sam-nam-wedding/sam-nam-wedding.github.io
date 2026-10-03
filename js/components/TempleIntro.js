@@ -74,7 +74,7 @@ export function TempleIntro() {
     const door = doorTransition.compute(progress);
     const hallway = hallwayReveal.compute(progress);
     const name = nameReveal.compute(progress);
-    const darkT = easeInOutCubic(segmentProgress(progress, ...scrollTimeline.blurToDark));
+    const darkT = easeInOutCubic(segmentProgress(progress, ...scrollTimeline.blurToDark)) * 0.28;
     const exitVeil = 0;
     const skyOpacity = 1 - easeOutCubic(segmentProgress(progress, ...scrollTimeline.skyLine));
     const hint = 1 - clamp(progress / 0.06, 0, 1);
@@ -97,7 +97,7 @@ export function TempleIntro() {
     root.style.setProperty("--hint-opacity", String(hint));
     root.style.setProperty("--stage-cream", String(stageCream));
     root.style.setProperty("--scene-dark", darkT.toFixed(3));
-    root.style.setProperty("--scene-blur", `${(darkT * 18).toFixed(2)}px`);
+    root.style.setProperty("--scene-blur", `${(darkT * 22).toFixed(2)}px`);
 
     if (skip) {
       skip.hidden = progress >= scrollTimeline.blurToDark[0];
